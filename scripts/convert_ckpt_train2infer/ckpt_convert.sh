@@ -139,11 +139,15 @@ n_to_m_rank_transformer(){ #Infer_strategy_path #Dst_ckpt_path #src_ckpt_path
     echo "----- End generate ${world_size}p ${precision} strategy time: $(date +%H:%M:%S) -----"
     #3. 转成worldsize的权重
     echo "----- Start to convert ${world_size}p ${precision} weights time: $(date +%H:%M:%S) -----"
-    python transform_ckpt.py \
-    --dst_ckpt_strategy=${Infer_strategy_path}_${world_size}p/strategy/ckpt_strategy_rank_0.ckpt \
+#    python transform_ckpt.py \
+#    --dst_ckpt_strategy=${Infer_strategy_path}_${world_size}p/strategy/ckpt_strategy_rank_0.ckpt \
+#    --src_ckpt_dir=${src_ckpt_path}  \
+#    --dst_ckpt_dir=${Dst_ckpt_path}_${world_size}p \
+#    --prefix="checkpoint_" \
+    python transform_ckpt_safetensors.py \
+    --dst_ckpt_strategy=${Infer_strategy_path}_${world_size}p/strategy  \
     --src_ckpt_dir=${src_ckpt_path}  \
     --dst_ckpt_dir=${Dst_ckpt_path}_${world_size}p \
-    --prefix="checkpoint_" \
     > ./log/log_transform_ckpt_${precision}_${world_size}.log 2>&1
     echo "----- End convert ${world_size}p ${precision} weights time: $(date +%H:%M:%S) -----"
 }
